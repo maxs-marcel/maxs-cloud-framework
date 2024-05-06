@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: maxs-system
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 63deb4d5-bd36-4b05-9d7c-0cc579e5002f
+      config:
+        enabled: false
+
+server:
+  port: 9100
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+feign:
+  sentinel:
+    enabled: true
