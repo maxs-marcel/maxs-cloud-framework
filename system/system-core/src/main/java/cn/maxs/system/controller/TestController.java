@@ -1,5 +1,6 @@
 package cn.maxs.system.controller;
 
+import cn.maxs.common.entity.framework.RestResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @GetMapping("/getMsg/{msg}")
-    public String getMsg(@PathVariable("msg") String msg){
+    public RestResult<String> getMsg(@PathVariable("msg") String msg){
 //        throw new RuntimeException("www");
-        return "系统服务模块收到消息：" + msg;
+        return RestResult.ok("系统服务模块收到消息：" + msg);
     }
 
 }

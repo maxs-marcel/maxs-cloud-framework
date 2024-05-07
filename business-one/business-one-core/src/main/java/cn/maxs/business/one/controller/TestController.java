@@ -2,6 +2,8 @@ package cn.maxs.business.one.controller;
 
 //import cn.maxs.business.one.feign.RemoteSystemTest;
 
+import cn.maxs.common.entity.framework.RestResult;
+import cn.maxs.common.exception.BusinessException;
 import cn.maxs.system.feign.RemoteSystemTest;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +24,9 @@ public class TestController {
     private RemoteSystemTest remoteSystemTest;
 
     @PostMapping("/sendMsg")
-    public String sendMsg(@RequestParam("msgInfo") String msgInfo){
+    public RestResult<String> sendMsg(@RequestParam("msgInfo") String msgInfo){
         // 使用OpenFeign的方式来访问
-        return remoteSystemTest.getMsg(msgInfo);
+        throw new RuntimeException("呵呵");
+//        return remoteSystemTest.getMsg(msgInfo);
     }
 }
