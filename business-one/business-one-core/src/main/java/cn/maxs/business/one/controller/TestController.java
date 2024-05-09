@@ -5,11 +5,12 @@ package cn.maxs.business.one.controller;
 import cn.maxs.common.entity.framework.RestResult;
 import cn.maxs.common.exception.BusinessException;
 import cn.maxs.system.feign.RemoteSystemTest;
-import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * @author Marcel.Maxs

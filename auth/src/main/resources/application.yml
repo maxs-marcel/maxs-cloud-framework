@@ -1,0 +1,41 @@
+server:
+  port: 9100
+
+spring:
+  application:
+    name: maxs-auth
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: 63deb4d5-bd36-4b05-9d7c-0cc579e5002f
+      config:
+        enabled: false
+
+management:
+  server:
+    port: 9110
+  endpoints:
+    jmx:
+      exposure:
+        include: '*'
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+
+auth:
+  ttl: 3600  #token存储到redis的过期时间
+  clientId: maxs
+  clientSecret: maxs
+  cookieDomain: localhost
+  cookieMaxAge: -1
+#encrypt:
+#  key-store:
+#    location: classpath:/maxs.jks
+#    secret: maxs
+#    alias: maxs
+#    password: maxs
