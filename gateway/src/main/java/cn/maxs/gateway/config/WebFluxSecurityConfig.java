@@ -14,8 +14,8 @@ import org.springframework.security.web.server.authentication.AuthenticationWebF
 import javax.annotation.Resource;
 
 /**
+ * 安全认证配置
  * 2024/5/14
- *
  * @author Marcel.Maxs
  */
 @Slf4j

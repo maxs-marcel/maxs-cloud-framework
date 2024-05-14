@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 /**
+ * 测试Controller
+ * 2024/4/30
  * @author Marcel.Maxs
- * @description
- * @date 2024/4/30
  */
 @RestController
 @RequestMapping("/test")
@@ -27,7 +27,7 @@ public class TestController {
     @PostMapping("/sendMsg")
     public RestResult<String> sendMsg(@RequestParam("msgInfo") String msgInfo){
         // 使用OpenFeign的方式来访问
-        throw new RuntimeException("呵呵");
-//        return remoteSystemTest.getMsg(msgInfo);
+//        throw new RuntimeException("呵呵");
+        return remoteSystemTest.getMsg(msgInfo);
     }
 }

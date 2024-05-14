@@ -21,7 +21,7 @@
         <dependency>
             <groupId>cn.maxs</groupId>
             <artifactId>business-one-feign-provider</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${maxs-business-one-feign.version}</version>
         </dependency>
     </dependencies>
 

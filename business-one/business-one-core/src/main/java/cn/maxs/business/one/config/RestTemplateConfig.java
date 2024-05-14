@@ -5,9 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 /**
+ * RestTemplate配置类
  * @author Marcel.Maxs
- * @description
- * @date 2024/4/30
  */
 @Configuration
 public class RestTemplateConfig {

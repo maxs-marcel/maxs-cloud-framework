@@ -17,7 +17,6 @@
         <module>system</module>
         <module>business-one</module>
         <module>gateway</module>
-        <!--<module>system/system-core</module>-->
     </modules>
 
     <parent>
@@ -32,17 +31,25 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <!-- Spring Settings -->
+        <!-- Maven Version Settings -->
         <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.9.RELEASE</spring-cloud-alibaba.version>
-        <alibaba-fastjson.version>1.2.47</alibaba-fastjson.version>
-        <!--<oauth2.version>2.3.5.RELEASE</oauth2.version>-->
         <spring-security-oauth2.version>2.1.3.RELEASE</spring-security-oauth2.version>
-        <mysql.version>8.0.33</mysql.version>
-        <hutool.version>4.5.0</hutool.version>
-        <javax-servlet-api.version>3.1.0</javax-servlet-api.version>
-        <javax-interceptor-api.version>1.2</javax-interceptor-api.version>
         <spring-security-jwt.version>1.0.10.RELEASE</spring-security-jwt.version>
+
+        <!-- Tools Version Settings -->
+        <javax-servlet-api.version>3.1.0</javax-servlet-api.version>
+        <alibaba-fastjson.version>1.2.47</alibaba-fastjson.version>
+        <hutool.version>4.5.0</hutool.version>
+
+        <!-- Database Version Settings -->
+        <mysql.version>8.0.33</mysql.version>
+        <mybatis-plus.version>3.5.2</mybatis-plus.version>
+
+        <!-- Maxs Module Version Settings -->
+        <maxs-common.version>1.0-SNAPSHOT</maxs-common.version>
+        <maxs-system-feign.version>1.0-SNAPSHOT</maxs-system-feign.version>
+        <maxs-business-one-feign.version>1.0-SNAPSHOT</maxs-business-one-feign.version>
     </properties>
 
     <dependencyManagement>
@@ -69,11 +76,6 @@
                 <version>${javax-servlet-api.version}</version>
                 <scope>provided</scope>
             </dependency>
-            <!--<dependency>
-                <groupId>javax.interceptor</groupId>
-                <artifactId>javax.interceptor‐api</artifactId>
-                <version>${javax-interceptor-api.version}</version>
-            </dependency>-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>

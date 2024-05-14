@@ -14,8 +14,8 @@ import reactor.core.publisher.Mono;
 import javax.annotation.Resource;
 
 /**
+ * 认证管理器
  * 2024/5/14
- *
  * @author Marcel.Maxs
  */
 @Slf4j

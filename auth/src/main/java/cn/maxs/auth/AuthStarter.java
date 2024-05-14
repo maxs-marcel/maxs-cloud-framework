@@ -8,8 +8,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * @author Marcel.Maxs
- * @description
- * @date 2024/4/30
  */
 @SpringBootApplication
 @EnableDiscoveryClient

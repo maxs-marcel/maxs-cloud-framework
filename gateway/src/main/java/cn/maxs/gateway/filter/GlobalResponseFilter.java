@@ -12,6 +12,7 @@ import reactor.core.publisher.Mono;
 
 /**
  * 全局响应体拦截
+ * @author Marcel.Maxs
  */
 @Slf4j
 @Component
@@ -32,6 +33,6 @@ public class GlobalResponseFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return 0;
+        return Ordered.HIGHEST_PRECEDENCE;
     }
 }

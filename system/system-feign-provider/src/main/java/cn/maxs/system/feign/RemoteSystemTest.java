@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 /**
+ * 远程调用 - 测试system模块feign调用
  * @author Marcel.Maxs
- * @description
- * @date 2024/4/30
+ * 2024/4/30
  */
 @FeignClient(value = "maxs-system", fallback = RemoteSystemTestFallback.class)
 public interface RemoteSystemTest {

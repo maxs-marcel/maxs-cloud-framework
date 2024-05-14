@@ -2,12 +2,10 @@ package cn.maxs.gateway.config;
 
 import cn.hutool.core.collection.ConcurrentHashSet;
 import cn.maxs.common.entity.po.SysPermission;
-import cn.maxs.common.entity.po.SysRole;
 import cn.maxs.gateway.service.SysRoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.ReactiveAuthorizationManager;
 import org.springframework.security.core.Authentication;
@@ -26,8 +24,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
+ * 自定义鉴权管理器
  * 2024/5/14
- *
  * @author Marcel.Maxs
  */
 @Slf4j
@@ -49,11 +47,12 @@ public class JwtAccessManager implements ReactiveAuthorizationManager<Authorizat
         if(request.getMethod() == HttpMethod.OPTIONS){
             return Mono.just(new AuthorizationDecision(true));
         }
-        // 请求资源
+        // 获取请求资源
         String requestPath = request.getURI().getPath();
         if(permitAll(requestPath)){
             return Mono.just(new AuthorizationDecision(true));
         }
+        // 权限校验
         return authentication
                 .map(auth -> new AuthorizationDecision(checkAuthorities(auth, requestPath)))
                 .defaultIfEmpty(new AuthorizationDecision(false));

@@ -5,9 +5,9 @@ import cn.maxs.system.feign.RemoteSystemTest;
 import org.springframework.stereotype.Component;
 
 /**
+ * 远程调用 - Fallback
  * @author Marcel.Maxs
- * @description
- * @date 2024/4/30
+ * 2024/4/30
  */
 @Component
 public class RemoteSystemTestFallback implements RemoteSystemTest {
