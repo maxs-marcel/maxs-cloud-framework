@@ -47,7 +47,7 @@ public class ResponseDecorator extends ServerHttpResponseDecorator {
                                 DataBufferUtils.release(join);
                                 String responseBody = new String(content, StandardCharsets.UTF_8);
                                 log.error("网关拦截异常响应体：response body: {}", responseBody);
-                                RestResult<Object> fail = RestResult.fail(
+                        RestResult<Object> fail = RestResult.fail(
                                         statusCode == null ? ResultStatus.FAIL.getCode() : statusCode.value(),
                                         statusCode == null ? ResultStatus.FAIL.getMsg() : ResultStatus.getMsgByCode(statusCode.value()));
 

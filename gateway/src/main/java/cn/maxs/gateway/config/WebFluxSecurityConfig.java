@@ -1,5 +1,7 @@
 package cn.maxs.gateway.config;
 
+import cn.maxs.gateway.filter.AccessDeniedHandler;
+import cn.maxs.gateway.filter.InvalidHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +28,10 @@ public class WebFluxSecurityConfig {
     private JwtAuthenticationManager jwtAuthenticationManager;
     @Resource
     private JwtAccessManager jwtAccessManager;
+    @Resource
+    private AccessDeniedHandler accessDeniedHandler;
+    @Resource
+    private InvalidHandler invalidHandler;
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
@@ -42,6 +48,10 @@ public class WebFluxSecurityConfig {
                 .pathMatchers("/maxs-auth/oauth/**").permitAll()
                 .pathMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyExchange().access(jwtAccessManager)
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler)
+                .authenticationEntryPoint(invalidHandler)
                 .and()
                 .addFilterAt(authenticationWebFilter, SecurityWebFiltersOrder.AUTHENTICATION)
                 .build();

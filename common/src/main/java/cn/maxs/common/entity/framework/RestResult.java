@@ -1,7 +1,7 @@
 package cn.maxs.common.entity.framework;
 
 import cn.maxs.common.enums.ResultStatus;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
  * 2024/5/6
  * @author Marcel.Maxs
  */
-@Getter
+@Data
 @NoArgsConstructor
 public class RestResult<T> {
 
