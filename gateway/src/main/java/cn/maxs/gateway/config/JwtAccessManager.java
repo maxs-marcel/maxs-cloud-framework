@@ -1,6 +1,9 @@
 package cn.maxs.gateway.config;
 
 import cn.hutool.core.collection.ConcurrentHashSet;
+import cn.maxs.common.entity.po.SysPermission;
+import cn.maxs.common.entity.po.SysRole;
+import cn.maxs.gateway.service.SysRoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -16,8 +19,11 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import javax.annotation.Resource;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 2024/5/14
@@ -31,10 +37,13 @@ public class JwtAccessManager implements ReactiveAuthorizationManager<Authorizat
     private Set<String> permitAll = new ConcurrentHashSet<>();
     private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
+    @Resource
+    private SysRoleService sysRoleService;
+
     @Override
     public Mono<AuthorizationDecision> check(Mono<Authentication> authentication, AuthorizationContext authorizationContext) {
         ServerWebExchange exchange = authorizationContext.getExchange();
-        ServerHttpRequest request = authorizationContext.getExchange().getRequest();
+        ServerHttpRequest request = exchange.getRequest();
 
         // 跨域预检直接放行
         if(request.getMethod() == HttpMethod.OPTIONS){
@@ -46,7 +55,7 @@ public class JwtAccessManager implements ReactiveAuthorizationManager<Authorizat
             return Mono.just(new AuthorizationDecision(true));
         }
         return authentication
-                .map(auth -> new AuthorizationDecision(checkAuthorities(exchange, auth, requestPath)))
+                .map(auth -> new AuthorizationDecision(checkAuthorities(auth, requestPath)))
                 .defaultIfEmpty(new AuthorizationDecision(false));
     }
 
@@ -60,7 +69,7 @@ public class JwtAccessManager implements ReactiveAuthorizationManager<Authorizat
     /**
      * 权限校验
      */
-    private boolean checkAuthorities(ServerWebExchange exchange, Authentication auth, String requestPath){
+    private boolean checkAuthorities(Authentication auth, String requestPath){
         if(auth instanceof OAuth2Authentication){
             OAuth2Authentication authentication = (OAuth2Authentication) auth;
             String clientId = authentication.getOAuth2Request().getClientId();
@@ -71,16 +80,24 @@ public class JwtAccessManager implements ReactiveAuthorizationManager<Authorizat
         Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
         log.info("requestPath: {}", requestPath);
         log.info("authorities: {}", authorities);
-        for (GrantedAuthority authority : authorities) {
-            String path = authority.getAuthority();
-            if(path.endsWith("/**")){
+
+        List<String> roleIds = authorities.stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+
+        // 根据角色ids，获取权限集合
+        List<SysPermission> permissionList = sysRoleService.listPermissionByRoleIds(roleIds);
+
+        for (SysPermission permission : permissionList) {
+            String path = permission.getAccessPath();
+            if(path != null && path.endsWith("/**")){
                 path = path.substring(0, path.length() - 4);
                 if(requestPath.startsWith(path)){
                     return true;
                 }
             }
         }
-        return authorities.stream().anyMatch(a -> a.getAuthority().equals(requestPath));
+        return false;
     }
 
     @Override

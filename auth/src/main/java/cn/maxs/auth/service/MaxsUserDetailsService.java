@@ -1,18 +1,20 @@
 package cn.maxs.auth.service;
 
+import cn.maxs.common.entity.po.SysUserRole;
+import cn.maxs.common.entity.po.SysUser;
+import cn.maxs.common.enums.system.EnableEnum;
 import com.alibaba.nacos.shaded.com.google.common.collect.Lists;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,21 +27,9 @@ import java.util.List;
 @Component(value = "userDetailsService")
 public class MaxsUserDetailsService implements UserDetailsService {
     @Resource
-    private PasswordEncoder passwordEncoder;
-
-    // 临时测试
-    private List<User> userList = Lists.newArrayList();
-    @PostConstruct
-    public void initUserList(){
-        String password = passwordEncoder.encode("123456");
-        List<SimpleGrantedAuthority> zhangSanAuthorities = new ArrayList<>();
-        zhangSanAuthorities.add(new SimpleGrantedAuthority("SYSTEM"));
-        zhangSanAuthorities.add(new SimpleGrantedAuthority("API"));
-        List<SimpleGrantedAuthority> liSiAuthorities = new ArrayList<>();
-        liSiAuthorities.add(new SimpleGrantedAuthority("/maxs-system/test/**"));
-        userList.add(new User("zhangsan", password, zhangSanAuthorities));
-        userList.add(new User("lisi", password, liSiAuthorities));
-    }
+    private SysUserService sysUserService;
+    @Resource
+    private SysUserRoleService sysUserRoleService;
 
     /**
      * 在使用 Spring Security 进行认证授权时，需要获取用户信息并对其进行认证授权操作。
@@ -49,11 +39,32 @@ public class MaxsUserDetailsService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("username is:{}", username);
-        // TODO: 查询数据库操作
-        User user = userList.stream()
-                .filter(t -> t.getUsername().equals(username))
-                .findFirst().orElseThrow(() -> new UsernameNotFoundException(username));
-        return user;
+        // 查询用户基本信息
+        LambdaQueryWrapper<SysUser> condition = new LambdaQueryWrapper<>();
+        condition = condition.eq(SysUser::getUsername, username);
+        SysUser userInfo = sysUserService.getOne(condition);
+        if (userInfo == null) {
+            log.error("用户名「{}」不存在", username);
+            throw new UsernameNotFoundException(username);
+        }
+        if(EnableEnum.DISABLE.getCode().equals(userInfo.getUserState())){
+            log.error("用户「{}」已被禁用", username);
+            throw new UsernameNotFoundException(username);
+        }
+
+        // 根据用户id查询角色信息
+        LambdaQueryWrapper<SysUserRole> urCondition = new LambdaQueryWrapper<>();
+        urCondition = urCondition.eq(SysUserRole::getUserId, userInfo.getId());
+        List<SysUserRole> userRoles = sysUserRoleService.list(urCondition);
+        List<SimpleGrantedAuthority> authorities = Lists.newArrayList();
+        if(!CollectionUtils.isEmpty(userRoles)){
+            userRoles.forEach(ur -> {
+                authorities.add(
+                        new SimpleGrantedAuthority(String.valueOf(ur.getId()))
+                );
+            });
+        }
+
+        return new User(userInfo.getUsername(), userInfo.getPassword(), authorities);
     }
 }

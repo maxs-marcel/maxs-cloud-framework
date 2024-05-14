@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -20,7 +21,6 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -95,7 +95,10 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory()
+
+        clients.withClientDetails(clientDetailsService)
+
+        /*inMemory()
                 .withClient("maxs-system")
                 .secret(new BCryptPasswordEncoder().encode("system123456"))
                 .resourceIds("maxs-cloud-framework")
@@ -104,7 +107,7 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
                         "client_credentials", "implicit", "refresh_token"
                 )
                 .scopes("server")
-                .redirectUris("http://baidu.com")
+                .redirectUris("http://baidu.com")*/
         ;
     }
 

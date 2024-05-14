@@ -1,0 +1,18 @@
+package cn.maxs.gateway.mapper;
+
+import cn.maxs.common.entity.po.SysRolePermission;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+* @author maxiangshun
+* @description 针对表【sys_role_permission(系统-角色-权限关系)】的数据库操作Mapper
+* @createDate 2024-05-14 14:18:37
+* @Entity cn.maxs.common.entity.po.SysRolePermission
+*/
+public interface SysRolePermissionMapper extends BaseMapper<SysRolePermission> {
+
+}
+
+
+
+

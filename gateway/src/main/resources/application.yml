@@ -9,6 +9,11 @@ spring:
     web-application-type: reactive
     # 应用名称
     name: maxs-gateway
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/maxs?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: root
   cloud:
     # 使用 Nacos 作为服务注册发现
     nacos:

@@ -4,6 +4,11 @@ server:
 spring:
   application:
     name: maxs-system
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/maxs?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: root
   cloud:
     nacos:
       discovery:
