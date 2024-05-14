@@ -19,8 +19,8 @@ import org.springframework.context.annotation.ComponentScan;
 public class GatewayStarter {
 
     public static void main(String[] args) {
-        log.info("业务1服务模块 starting...");
+        log.info("网关服务模块 starting...");
         SpringApplication.run(GatewayStarter.class, args);
-        log.info("业务1服务模块 started!");
+        log.info("网关服务模块 started!");
     }
 }

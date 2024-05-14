@@ -22,13 +22,16 @@ public class GlobalResponseFilter implements GlobalFilter, Ordered {
         // 注入requestDecorator、responseDecorator用于获得请求体、响应体
         ServerHttpRequestDecorator requestDecorator = new RequestDecorator(exchange.getRequest(), exchange);
         ServerHttpResponseDecorator responseDecorator = new ResponseDecorator(exchange.getResponse());
-        return chain.filter(exchange.mutate().request(requestDecorator).response(responseDecorator).build()).then(Mono.just(exchange))
+        return chain.filter(exchange.mutate()
+                        .request(requestDecorator).response(responseDecorator).build()
+                )
+                .then(Mono.just(exchange))
                 .map(serverWebExchange -> serverWebExchange)
                 .then();
     }
 
     @Override
     public int getOrder() {
-        return Ordered.HIGHEST_PRECEDENCE;
+        return 0;
     }
 }

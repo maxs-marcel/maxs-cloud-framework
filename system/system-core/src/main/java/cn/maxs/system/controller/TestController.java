@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Marcel.Maxs
  * @description
@@ -19,6 +21,11 @@ public class TestController {
     public RestResult<String> getMsg(@PathVariable("msg") String msg){
 //        throw new RuntimeException("www");
         return RestResult.ok("系统服务模块收到消息：" + msg);
+    }
+
+    @GetMapping("/getUserInfo")
+    public RestResult getUserInfo(HttpServletRequest request){
+        return RestResult.ok(request.getAttribute("login_message"));
     }
 
 }
