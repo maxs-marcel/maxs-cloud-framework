@@ -34,13 +34,13 @@ public class JwtAuthenticationManager implements ReactiveAuthenticationManager {
                     log.info("accessToken: {}", accessToken);
                     OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(accessToken);
                     if(oAuth2AccessToken == null){
-                        return Mono.error(new InvalidTokenException("invalid access token, please check."));
+                        return Mono.error(new InvalidTokenException("无效的访问令牌，请检查。"));
                     }else if(oAuth2AccessToken.isExpired()){
-                        return Mono.error(new InvalidTokenException("access token has expired, please reacquire."));
+                        return Mono.error(new InvalidTokenException("访问令牌已过期，请重新获取。"));
                     }
                     OAuth2Authentication oAuth2Authentication = tokenStore.readAuthentication(accessToken);
                     if(oAuth2Authentication == null){
-                        return Mono.error(new InvalidTokenException("access token is invalid!"));
+                        return Mono.error(new InvalidTokenException("访问令牌无效！"));
                     }else{
                         return Mono.just(oAuth2Authentication);
                     }
