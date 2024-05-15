@@ -1,5 +1,6 @@
 package cn.maxs.gateway.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -16,7 +17,8 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @Configuration
 public class TokenConfig {
 
-    private static final String SIGNING_KEY = "maxs123";
+    @Value("${jwt.access-token.signing-key}")
+    private String signingKey;
 
     @Bean
     public TokenStore tokenStore(){
@@ -26,7 +28,7 @@ public class TokenConfig {
     @Bean
     public JwtAccessTokenConverter accessTokenConverter(){
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey(SIGNING_KEY);// 对称密钥，资源服务使用该密钥解密
+        converter.setSigningKey(signingKey);// 对称密钥，资源服务使用该密钥解密
         return converter;
     }
 

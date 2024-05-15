@@ -1,6 +1,5 @@
 package cn.maxs.gateway.config;
 
-import cn.hutool.core.collection.ConcurrentHashSet;
 import cn.maxs.common.entity.po.SysPermission;
 import cn.maxs.gateway.service.SysRoleService;
 import com.alibaba.fastjson.JSONArray;
@@ -39,7 +38,11 @@ import static cn.maxs.common.constant.system.RedisKey.ROLE_PERMISSIONS;
 @Component
 public class JwtAccessManager implements ReactiveAuthorizationManager<AuthorizationContext> {
 
-    private Set<String> permitAll = new ConcurrentHashSet<>();
+    /*@Value("${jwt.ignore-url}")
+    private Set<String> permitAll = new ConcurrentHashSet<>();*/
+    @Resource
+    private IgnoreUrlsConfig ignoreUrlsConfig;
+
     private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
 
@@ -77,6 +80,7 @@ public class JwtAccessManager implements ReactiveAuthorizationManager<Authorizat
      * 校验是不是可以直接放行的资源
      */
     private boolean permitAll(String requestPath){
+        Set<String> permitAll = ignoreUrlsConfig.getIgnoreUrls();
         return permitAll.stream().anyMatch(r -> ANT_PATH_MATCHER.match(r, requestPath));
     }
 

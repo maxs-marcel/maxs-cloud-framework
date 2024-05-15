@@ -55,7 +55,15 @@ spring:
           predicates:
             - Path=/oauth/**
 
+  # 直接放行的资源
+maxs-security:
+  ignore-urls:
+    - /maxs-system/role-permission/batchSaveUpdate
 
+jwt:
+  # 对称密钥，资源服务使用该密钥解密
+  access-token:
+    signing-key: maxs123
 
 # 开启熔断机制
 feign:

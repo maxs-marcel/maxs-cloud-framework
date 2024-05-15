@@ -9,16 +9,4 @@ package cn.maxs.common.constant;
 public interface SecurityConstants {
     // 项目名称
     String PROJECT_NAME = "maxs-";
-
-    // 项目的license
-    String PROJECT_LICENSE = "made by maxs";
-
-    // OAuth前缀
-    String OAUTH_PREFIX = "oauth:";
-
-    // 默认登录URL
-    String OAUTH_TOKEN_URL = "/oauth/token";
-
-    // grant_type
-    String REFRESH_TOKEN = "refresh_token";
 }

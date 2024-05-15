@@ -18,3 +18,8 @@ spring:
     url: jdbc:mysql://localhost:3306/maxs?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: root
+
+# 对称密钥，资源服务使用该密钥解密
+jwt:
+  access-token:
+    signing-key: maxs123
