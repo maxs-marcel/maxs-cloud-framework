@@ -3,6 +3,7 @@ package cn.maxs.gateway.filter;
 import cn.maxs.common.entity.framework.RestResult;
 import cn.maxs.common.enums.ResultStatus;
 import com.alibaba.fastjson.JSON;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.core.AuthenticationException;
@@ -30,6 +31,7 @@ public class InvalidHandler extends HttpBasicServerAuthenticationEntryPoint {
         ServerHttpResponse response = exchange.getResponse();
 
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+        response.setStatusCode(HttpStatus.UNAUTHORIZED);
         return response.writeAndFlushWith(Flux
                 .just(ByteBufFlux
                         .just(response.bufferFactory().wrap(

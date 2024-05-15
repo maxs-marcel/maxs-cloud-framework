@@ -14,6 +14,10 @@ spring:
     url: jdbc:mysql://localhost:3306/maxs?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: root
+  redis:
+    host: localhost
+    port: 6379
+    password:
   cloud:
     # 使用 Nacos 作为服务注册发现
     nacos:
@@ -68,4 +72,4 @@ management:
 # 配置日志级别，方便调试
 logging:
   level:
-    org.springframework.cloud.gateway: debug
+    org.springframework.cloud.gateway: info

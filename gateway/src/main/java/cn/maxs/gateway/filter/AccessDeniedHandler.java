@@ -3,6 +3,7 @@ package cn.maxs.gateway.filter;
 import cn.maxs.common.entity.framework.RestResult;
 import cn.maxs.common.enums.ResultStatus;
 import com.alibaba.fastjson.JSON;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.access.AccessDeniedException;
@@ -30,6 +31,7 @@ public class AccessDeniedHandler implements ServerAccessDeniedHandler {
         ServerHttpResponse response = serverWebExchange.getResponse();
 
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+        response.setStatusCode(HttpStatus.FORBIDDEN);
         Mono<Void> ret;
         ret = response.writeAndFlushWith(Flux
                 .just(ByteBufFlux
