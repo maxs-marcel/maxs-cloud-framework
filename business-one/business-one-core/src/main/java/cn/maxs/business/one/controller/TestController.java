@@ -27,7 +27,7 @@ public class TestController {
     @PostMapping("/sendMsg")
     public RestResult<String> sendMsg(@RequestParam("msgInfo") String msgInfo){
         // 使用OpenFeign的方式来访问
-//        throw new RuntimeException("呵呵");
+//        throw new RuntimeException("测试feign调用之前出现的异常");
         return remoteSystemTest.getMsg(msgInfo);
     }
 }

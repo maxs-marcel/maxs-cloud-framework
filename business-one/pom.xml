@@ -77,6 +77,23 @@
             <groupId>cn.maxs</groupId>
             <artifactId>common</artifactId>
             <version>${maxs-common.version}</version>
+            <!-- business-one模块暂时不需要数据库 -->
+            <exclusions>
+                <!-- 数据库 -->
+                <exclusion>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-jdbc</artifactId>
+                </exclusion>
+                <!-- mybatis plus -->
+                <exclusion>
+                    <groupId>com.baomidou</groupId>
+                    <artifactId>mybatis-plus-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
