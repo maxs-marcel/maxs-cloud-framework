@@ -1,0 +1,17 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    # 使用 Nacos 作为服务注册发现
+    nacos:
+      # 注册发现中心
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 63deb4d5-bd36-4b05-9d7c-0cc579e5002f
+      # 配置中心
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        file-extension: yml
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        #公共配置文件
+        shared-configs: public-config.yml

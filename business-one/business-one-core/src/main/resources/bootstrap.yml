@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: maxs-business-one
+  profiles:
+    active: dev
