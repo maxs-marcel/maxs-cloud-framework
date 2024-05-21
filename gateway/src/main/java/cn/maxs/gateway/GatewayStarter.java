@@ -21,6 +21,7 @@ public class GatewayStarter {
 
     public static void main(String[] args) {
         log.info("网关服务模块 starting...");
+        System.setProperty("nacos.logging.default.config.enabled", "false");
         SpringApplication.run(GatewayStarter.class, args);
         log.info("网关服务模块 started!");
     }

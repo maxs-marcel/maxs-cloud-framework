@@ -22,6 +22,7 @@ public class BusinessOneStarter {
 
     public static void main(String[] args) {
         log.info("业务1服务模块 starting...");
+        System.setProperty("nacos.logging.default.config.enabled", "false");
         SpringApplication.run(BusinessOneStarter.class, args);
         log.info("业务1服务模块 started!");
     }

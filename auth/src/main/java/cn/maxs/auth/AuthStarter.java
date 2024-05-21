@@ -16,6 +16,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class AuthStarter {
     public static void main(String[] args) {
         log.info("鉴权服务模块 starting...");
+        System.setProperty("nacos.logging.default.config.enabled", "false");
         SpringApplication.run(AuthStarter.class, args);
         log.info("鉴权服务模块 started!");
     }

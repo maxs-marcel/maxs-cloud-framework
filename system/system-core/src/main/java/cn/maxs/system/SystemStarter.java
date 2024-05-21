@@ -18,6 +18,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 public class SystemStarter {
     public static void main(String[] args) {
         log.info("系统服务模块 starting...");
+        System.setProperty("nacos.logging.default.config.enabled", "false");
         SpringApplication.run(SystemStarter.class, args);
         log.info("系统服务模块 started!");
     }
