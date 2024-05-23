@@ -5,6 +5,8 @@ import lombok.Getter;
 
 /**
  * JSON统一返回状态码枚举类
+ * 注意：如果有需要定制的业务异常状态码，需要把所有异常码都放在这里
+ * 否则网关的统一异常处理的时候会返回统一的错误码及错误信息
  * 2024/5/6
  * @author Marcel.Maxs
  */
@@ -15,6 +17,7 @@ public enum ResultStatus {
     SUCCESS(1, "操作成功"),
     // 统一失败默认提示
     FAIL(-1, "操作失败"),
+
     // 401错误默认提示
     ERR_401(401, "登录已过期，请重新登录"),
     // 403错误默认提示
@@ -23,6 +26,9 @@ public enum ResultStatus {
     ERR_404(404, "服务器迷路了～"),
     // 500错误默认提示
     ERR_500(500, "服务器出错了～"),
+
+    // 455错误默认提示（在本系统中定义为参数错误）
+    ERR_455(455, "参数错误，请检查"),
     ;
     private final Integer code;
     private final String msg;
